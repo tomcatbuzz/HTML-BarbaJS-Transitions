@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Transitions</title>
+</head>
+<body data-barba="wrapper">
+
+  <ul class="transition">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+
+  <div class="wrapper">
+    <header>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+  </div>
+    <main data-barba="container" data-barba-namespace="services">
+      <div class="pagination">
+        <a href="./">Home</a>
+        <a href="./about.html">About</a>
+        <a href="./services.html">Services</a>
+      </div>
+      <div class="left">
+        <h1>What we do</h1>
+        <a href="index.html" class="cta">Back to Home</a>
+      </div>
+      <img src="image2.jpg" alt="picture of model">
+    </main>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.4/gsap.min.js"></script>
+  <script src="https://unpkg.com/@barba/core"></script>
+  <script src="index.js"></script>
+</body>
+</html>
