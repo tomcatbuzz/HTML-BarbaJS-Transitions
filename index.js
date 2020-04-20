@@ -36,29 +36,29 @@ function delay(n) {
   });
 } 
 
-// Remove later
+// Remove later used as hook example
 barba.hooks.before(data => {
   console.log(data.current.url.path, 'This is PAGE');
 });
 
-function changeNav(bigNum, smallNum1, smallNum2, smallNum3) {
-  const navBtns = document.querySelectorAll('a');
-    gsap.set(navBtns[bigNum], {
-      color: 'red',
-      fontSize: '2rem'
-    });
-    gsap.set(navBtns[smallNum1], {
-      color: '#D9D9D9',
-      fontSize: '1rem'
-    });
-    gsap.set(navBtns[smallNum2], {
-      color: '#D9D9D9',
-      fontSize: '1rem'
-    }); 
-    gsap.set(navBtns[smallNum3], {
-      color: '#D9D9D9',
-      fontSize: '1rem'
-    }); 
+function changeNav() {
+  const currentLocation = location.href;
+  const navBtns = document.querySelectorAll('li > a');
+  const menuLength = navBtns.length;
+    for (let i = 0; i < menuLength; i ++) {
+      if(navBtns[i].href === currentLocation) {
+        gsap.set(navBtns[i], {
+          color: 'blue',
+          fontSize: '2rem'
+        });
+      } else {
+        gsap.set(navBtns[i], {
+          color: '#D9D9D9',
+          fontSize: '1rem'
+        });
+      }
+      console.log(currentLocation);
+    }
 }
 
 barba.init({
@@ -66,23 +66,15 @@ barba.init({
   transitions: [{
     async once(data) {
       contentAnimation();
-      if(data.next.url.path == '/' || data.next.url.path == '/index.html')
-        changeNav(0, 1, 2, 3);
-      else if(data.next.url.path == '/about.html')
-        changeNav(1, 0, 2, 3);
-      else
-        changeNav(3, 2, 0, 1);
+      changeNav();
+      
       console.log(document.querySelectorAll('li > a'), 'This is Data ONCE');
       console.log(data.current.url.path, 'This is PAGE ONCE');
     },
     async enter(data) {
       contentAnimation();
-      if(data.next.url.path == '/' || data.next.url.path == '/index.html')
-        changeNav(0, 1, 2, 3);
-      else if(data.next.url.path == '/about.html')
-        changeNav(1, 0, 2, 3);
-      else
-        changeNav(3, 2, 1, 0);
+      changeNav();
+      
       console.log(document.querySelectorAll('li > a'), 'This is Data ENTER');
       console.log(data.current.url.path, 'This is PAGE ENTER');
     },
@@ -95,54 +87,3 @@ barba.init({
   }],
   debug: true
 });
-
-// barba.init({
-//   sync: true,
-//   transitions: [{
-//     async leave(data) {
-//       const done = this.async();
-//       pageTransition();
-//       await delay(1500);
-//       done();
-//     },
-//     async enter(data) {
-//       contentAnimation();
-//       if(data.next.url.path == '/' || data.next.url.path == '/index.html')
-//         changeNavNumber(3, 4, 5);
-//       else if(data.next.url.path == '/about.html')
-//         changeNavNumber(4, 3, 5);
-//       else
-//         changeNavNumber(5, 4, 3);
-//     },
-//     async once(data) {
-//       contentAnimation();
-//       if(data.next.url.path == '/' || data.next.url.path == '/index.html')
-//         changeNavNumber(0, 1, 2);
-//       else if(data.next.url.path == '/about.html')
-//         changeNavNumber(1, 0, 2);
-//       else
-//         changeNavNumber(2, 0, 1);
-//     }
-//   }],
-//   debug: true
-// });
-
-
-
-// Barba.Dispatcher.on('newPageReady', function(currentStatus) {
-//   const link = currentStatus.url.split(window.location.origin)[1].substring(1); // get path of current page
-
-//   const navigation             = document.querySelector('.navigation');
-//   const navigationLinks        = navigation.querySelectorAll('.navigation__link');
-//   const navigationLinkIsActive = navigation.querySelector(`[href="${link}"]`);
-
-//   Array.prototype.forEach.call(navigationLinks, (navigationLink) => navigationLink.classList.remove('is-active')); // remove CSS class 'is-active' from all .navigation__links
-
-//   navigationLinkIsActive.classList.add('is-active'); // add CSS class to current .navigation__link
-
-// });
-
-// Barba.Dispatcher.on('newPageReady', function(newStatus, oldStatus, container, html) {
-//   const navs = $(html).find('[data-barba-update]') // New ones
-//   $('[data-barba-update]').each((i,el) => $(el).html($(navs[i]).html())) // Replace each old ones
-// });
