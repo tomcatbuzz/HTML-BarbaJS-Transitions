@@ -38,23 +38,27 @@ function delay(n) {
 
 // Remove later
 barba.hooks.before(data => {
-  console.log(data.current.url.path, 'This is Current');
+  console.log(data.current.url.path, 'This is PAGE');
 });
 
-function changeNav(bigNum, smallNum1, smallNum2) {
+function changeNav(bigNum, smallNum1, smallNum2, smallNum3) {
   const navBtns = document.querySelectorAll('a');
     gsap.set(navBtns[bigNum], {
-      color: 'black',
-      fontSize: '3rem'
+      color: 'red',
+      fontSize: '2rem'
     });
     gsap.set(navBtns[smallNum1], {
       color: '#D9D9D9',
-      fontSize: '2rem'
+      fontSize: '1rem'
     });
     gsap.set(navBtns[smallNum2], {
       color: '#D9D9D9',
-      fontSize: '2rem'
-      });  
+      fontSize: '1rem'
+    }); 
+    gsap.set(navBtns[smallNum3], {
+      color: '#D9D9D9',
+      fontSize: '1rem'
+    }); 
 }
 
 barba.init({
@@ -63,21 +67,24 @@ barba.init({
     async once(data) {
       contentAnimation();
       if(data.next.url.path == '/' || data.next.url.path == '/index.html')
-        changeNav(0, 1, 2);
+        changeNav(0, 1, 2, 3);
       else if(data.next.url.path == '/about.html')
-        changeNav(1, 0, 2);
+        changeNav(1, 0, 2, 3);
       else
-        changeNav(2, 0, 1);
+        changeNav(3, 2, 0, 1);
+      console.log(document.querySelectorAll('li > a'), 'This is Data ONCE');
+      console.log(data.current.url.path, 'This is PAGE ONCE');
     },
     async enter(data) {
       contentAnimation();
       if(data.next.url.path == '/' || data.next.url.path == '/index.html')
-        changeNav(3, 4, 5);
+        changeNav(0, 1, 2, 3);
       else if(data.next.url.path == '/about.html')
-        changeNav(4, 3, 5);
+        changeNav(1, 0, 2, 3);
       else
-        changeNav(5, 4, 3);
-      console.log(data.next.url.path);
+        changeNav(3, 2, 1, 0);
+      console.log(document.querySelectorAll('li > a'), 'This is Data ENTER');
+      console.log(data.current.url.path, 'This is PAGE ENTER');
     },
     async leave(data) {
       const done = this.async();
